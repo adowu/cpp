@@ -71,8 +71,26 @@ void test06()
     // a > b ? a : b = 100;
     // 这里相当于 是给b赋值了，如果直接返回的 a 则还是 a 的值， 和我们本题要表达的不一致
 }
+// 7. const 增强
+// 全局的受到保护不可以修改
+const int const_a = 10;
+void test07()
+{
+    // 这个不是 伪常量 是真正的常量
+    const int const_b = 20;
+    // 这里编译器会临时开辟内存空间
+    // int temp = const_b
+    // int *p = (int *) &temp
+    // 所以本身的const_b没被修改，临时的内存空间是被修改了的
+    int *p = (int *) &const_b;
+    *p = 30;
+    cout << *p << endl;
+    cout << const_b << endl;
+    // 可以初始化数组的，因为是伪常量
+    int arr[const_b]; 
+}
 int main()
 {
-    test06();
+    test07();
     return 0;
 }

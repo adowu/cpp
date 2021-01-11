@@ -3,7 +3,6 @@
 #include <stdlib.h>
 
 // 1. 全局变量增强
-int a;
 int a = 10;
 
 // 2. 函数检测增强,参数检测增强
@@ -45,8 +44,23 @@ void test05()
     // expression is not assignable
     // a > b ? a : b = 100;
 }
+
+// 7. const 增强
+// 全局的受到保护不可以修改
+const int const_a = 10;
+void test06()
+{
+    // 伪常量
+    const int const_b = 20;
+    // const_b = 30;
+    int *p = &const_b;
+    *p = 30;
+    printf("*p= %d",  *p);
+    // int arr[const_b]; 不可以初始化数组的，因为是伪常量
+}
+
 int main()
 {
-    test05();
+    test06();
     return 0;
 }
