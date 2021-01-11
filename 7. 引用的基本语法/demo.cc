@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-// 引用的实质就是起别名
+// 引用的实质就是起别名，本质就是指针常量
 void test01()
 {
     int a = 10;
