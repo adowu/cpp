@@ -20,7 +20,6 @@ void test01()
 	}
 }
 
-
 void printVector(vector<int> &v)
 {
 	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
@@ -60,7 +59,7 @@ void test02()
 	{
 		cout << "NOT" << endl;
 	}
-	
+
 	v4.resize(10);
 	printVector(v4);
 
@@ -71,8 +70,125 @@ void test02()
 	printVector(v1);
 }
 
+void test03()
+{
+	vector<int> v;
+	for (int i = 0; i < 100000; i++)
+	{
+		v.push_back(i);
+	}
+	cout << v.capacity() << endl;
+	cout << v.size() << endl;
+
+	v.resize(3);
+	cout << v.capacity() << endl;
+	cout << v.size() << endl;
+	// 巧用 swap
+	vector<int>(v).swap(v);
+	cout << v.capacity() << endl;
+	cout << v.size() << endl;
+}
+
+void test04()
+{
+	vector<int> v;
+	int *p = NULL;
+	int num = 0;
+	for (int i = 0; i < 100000; i++)
+	{
+		v.push_back(i);
+		if (p != &v[0])
+		{
+			// 因为随着size变大，vector会改变自己在内存中的位置，首地址就会变
+			p = &v[0];
+			num++;
+		}
+	}
+	cout << num << endl;
+}
+void test05()
+{
+	vector<int> v;
+	v.reserve(100000);
+	int *p = NULL;
+	int num = 0;
+	for (int i = 0; i < 100000; i++)
+	{
+		v.push_back(i);
+		if (p != &v[0])
+		{
+			// 直接预留了 100000 个空间 就不会一直开闭新的空间
+			p = &v[0];
+			num++;
+		}
+	}
+	cout << num << endl;
+}
+
+void test06()
+{
+	vector<int> v;
+	v.push_back(1);
+	v.push_back(1);
+	v.push_back(1);
+	v.push_back(4);
+	v.push_back(5);
+
+	cout << v.front() << endl;
+	cout << *v.begin() << endl;
+
+	cout << v.back() << endl;
+}
+
+void test07()
+{
+	vector<int> v;
+	v.push_back(1);
+	v.push_back(1);
+	v.push_back(1);
+	v.push_back(4);
+	v.push_back(5);
+	// 迭代器 N个数 具体插入的内容
+	v.insert(v.begin(), 1, 2);
+	printVector(v);
+
+	v.pop_back();
+	printVector(v);
+
+	v.erase(v.begin());
+	printVector(v);
+
+	v.erase(v.begin(), v.end());
+	printVector(v);
+
+	v.clear();
+	printVector(v);
+}
+
+void test08()
+{
+	// 逆序遍历
+	vector<int> v;
+	for (int i = 0; i < 10; i++)
+	{
+		v.push_back(i);
+	}
+	printVector(v);
+
+	for (vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); it++)
+	{
+		cout << *it << " ";
+	}
+	cout << endl;
+
+	// vector 迭代器是随机访问的，支持跳跃式访问
+	vector<int>::iterator itBegin = v.begin();
+	itBegin = itBegin + 3;
+	cout << *itBegin << endl;
+
+}
 int main(int argc, const char *argv[])
 {
-	test02();
+	test08();
 	return 0;
 }
